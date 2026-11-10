@@ -1,0 +1,9 @@
+{
+  "appId": "io.github.ruoccos.rjuke",
+  "appName": "rJuke",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#0b0e0c",
+    "allowMixedContent": true
+  }
+}

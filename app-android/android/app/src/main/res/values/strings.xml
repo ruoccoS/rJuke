@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">rJuke</string>
+    <string name="title_activity_main">rJuke</string>
+    <string name="package_name">io.github.ruoccos.rjuke</string>
+    <string name="custom_url_scheme">io.github.ruoccos.rjuke</string>
+</resources>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>rJuke</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+  <div id="app" class="app" hidden>
+    <header class="m-search" id="m-search">
+      <label class="search">
+        <span class="search-i"></span>
+        <input id="search" type="search" placeholder="Search" spellcheck="false" autocomplete="off" enterkeyhint="search">
+        <button class="search-x" id="search-clear" type="button" aria-label="Clear"></button>
+      </label>
+    </header>
+
+    <main class="content" id="content"></main>
+
+    <div class="scan-pill" id="scan-pill" hidden><span class="spinner"></span><span class="scan-txt" data-i18n>Updating library…</span></div>
+
+    <div class="dock">
+      <div class="lcd" id="lcd">
+        <div class="lcd-art" id="lcd-art"></div>
+        <div class="lcd-mid"><div class="lcd-text" id="lcd-text"></div></div>
+        <button class="ibtn" id="tb-play" aria-label="Play"></button>
+        <button class="ibtn" id="tb-next" aria-label="Next"></button>
+        <div class="lcd-bar" id="lcd-bar"><div class="lcd-fill" id="lcd-fill"></div></div>
+        <span id="lcd-cur" hidden></span><span id="lcd-rem" hidden></span>
+      </div>
+      <nav class="tabs" id="nav">
+        <div class="nav-ind" id="nav-ind"></div>
+        <a class="nav-item" data-view="home" data-icon="home"><span data-i18n>Home</span></a>
+        <a class="nav-item" data-view="library" data-icon="album"><span data-i18n>Library</span></a>
+        <a class="nav-item" data-view="search" data-icon="search"><span data-i18n>Search</span></a>
+      </nav>
+    </div>
+
+    <div hidden>
+      <div id="pl-list"></div>
+      <div id="queue"><div class="q-body"></div></div>
+    </div>
+  </div>
+
+  <section id="np" class="np" aria-hidden="true">
+    <div class="np-bg" id="np-bg"></div>
+    <div class="np-top">
+      <button class="ibtn np-close" id="np-close" aria-label="Close"></button>
+      <div class="np-grab"></div>
+    </div>
+    <div class="np-body" id="np-body">
+      <div class="np-left">
+        <div class="np-art-wrap"><div class="np-art" id="np-art"></div></div>
+        <div class="np-meta">
+          <div class="np-thumb" id="np-thumb"></div>
+          <div class="np-titles">
+            <div class="np-title" id="np-title"></div>
+            <div class="np-artist" id="np-artist"></div>
+          </div>
+          <button class="ibtn np-more" id="np-more" aria-label="More"></button>
+        </div>
+        <div class="np-progress">
+          <div class="np-bar" id="np-bar"><div class="np-fill" id="np-fill"></div></div>
+          <div class="np-times"><span id="np-cur">0:00</span><span class="np-quality" id="np-quality"></span><span id="np-rem">-0:00</span></div>
+        </div>
+        <div class="np-controls">
+          <button class="ibtn np-sm" id="np-shuffle" aria-label="Shuffle play"></button>
+          <button class="ibtn np-skip" id="np-prev" aria-label="Previous"></button>
+          <button class="ibtn np-play" id="np-play" aria-label="Play"></button>
+          <button class="ibtn np-skip" id="np-next" aria-label="Next"></button>
+          <button class="ibtn np-sm" id="np-repeat" aria-label="Repeat"></button>
+        </div>
+        <div class="np-tools">
+          <button class="pill-btn" id="np-lyrics-toggle"></button>
+          <button class="pill-btn" id="np-queue-toggle"></button>
+          <button class="pill-btn" id="np-connect" data-connect-btn></button>
+        </div>
+      </div>
+      <div class="np-right" id="np-right">
+        <div class="lyrics" id="lyrics"></div>
+        <div class="np-queue" id="np-queue"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup" class="setup" hidden></section>
+  <div id="menu-root"></div>
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root"></div>
+
+  <script src="lang-it.js"></script>
+  <script src="i18n.js"></script>
+  <script src="platform.js"></script>
+  <script src="icons.js"></script>
+  <script src="loader.js"></script>
+</body>
+</html>

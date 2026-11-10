@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>rJuke</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; img-src 'self' file: data: blob: http:; media-src 'self' file: blob: http:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' file: blob:; font-src 'self' file:">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app" hidden>
+    <aside class="sidebar">
+      <div class="side-top drag">
+        <div class="brand" id="brand"><span class="brand-logo"></span><span class="brand-name">r<b>Juke</b></span></div>
+      </div>
+      <label class="search">
+        <span class="search-i"></span>
+        <input id="search" type="search" placeholder="Search" spellcheck="false" autocomplete="off">
+      </label>
+      <nav class="nav" id="nav">
+        <div class="nav-ind" id="nav-ind"></div>
+        <a class="nav-item" data-view="home" data-icon="home" data-i18n>Home</a>
+        <div class="nav-h" data-i18n>Library</div>
+        <a class="nav-item" data-view="recent" data-icon="clock" data-i18n>Recently added</a>
+        <a class="nav-item" data-view="artists" data-icon="mic" data-i18n>Artists</a>
+        <a class="nav-item" data-view="albums" data-icon="album" data-i18n>Albums</a>
+        <a class="nav-item" data-view="songs" data-icon="note" data-i18n>Tracks</a>
+        <div class="nav-h"><span data-i18n>Playlists</span>
+          <span class="nav-h-actions">
+            <button class="mini-btn" id="pl-import" title="Import playlists (.m3u8)"></button>
+            <button class="mini-btn" id="pl-add" title="New playlist"></button>
+          </span>
+        </div>
+        <div id="pl-list"></div>
+      </nav>
+      <div class="side-bottom">
+        <button class="src-pill" id="src-pill" type="button" hidden></button>
+        <div class="scan-pill" id="scan-pill" hidden><span class="spinner"></span><span class="scan-txt" data-i18n>Updating library…</span></div>
+        <a class="nav-item" data-view="settings" data-icon="settings" data-i18n>Settings</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar drag" id="topbar">
+        <div class="tb-controls nodrag">
+          <button class="ibtn sm" id="tb-shuffle" title="Shuffle play"></button>
+          <button class="ibtn" id="tb-prev" title="Previous"></button>
+          <button class="ibtn lg" id="tb-play" title="Play"></button>
+          <button class="ibtn" id="tb-next" title="Next"></button>
+          <button class="ibtn sm" id="tb-repeat" title="Repeat"></button>
+        </div>
+        <div class="lcd nodrag" id="lcd">
+          <div class="lcd-art" id="lcd-art" title="Open Now playing"></div>
+          <div class="lcd-mid">
+            <div class="lcd-text" id="lcd-text"><div class="lcd-idle"></div></div>
+            <div class="lcd-times"><span id="lcd-cur">0:00</span><span id="lcd-rem">-0:00</span></div>
+            <div class="lcd-bar" id="lcd-bar"><div class="lcd-fill" id="lcd-fill"></div></div>
+          </div>
+        </div>
+        <div class="tb-right nodrag">
+          <div class="vol" id="tb-vol">
+            <span class="vol-i"></span>
+            <div class="slider" id="vol-slider"><div class="slider-fill"></div><div class="slider-knob"></div></div>
+          </div>
+          <button class="ibtn sm" id="tb-party" title="PartyBox: let your friends pick the music"></button>
+          <button class="ibtn sm" id="tb-connect" data-connect-btn title="Listen on… (rJuke Connect)"></button>
+          <button class="ibtn sm" id="tb-lyrics" title="Lyrics"></button>
+          <button class="ibtn sm" id="tb-queue" title="Queue"></button>
+        </div>
+      </header>
+      <div class="content" id="content"></div>
+      <aside class="queue" id="queue"></aside>
+    </main>
+  </div>
+
+  <section id="np" class="np" aria-hidden="true">
+    <div class="np-bg" id="np-bg"></div>
+    <div class="np-top drag">
+      <button class="ibtn nodrag np-close" id="np-close" title="Close"></button>
+    </div>
+    <div class="np-body" id="np-body">
+      <div class="np-left">
+        <div class="np-art-wrap"><div class="np-art" id="np-art"></div></div>
+        <div class="np-meta">
+          <div class="np-titles">
+            <div class="np-title" id="np-title"></div>
+            <div class="np-artist" id="np-artist"></div>
+          </div>
+          <button class="ibtn np-more" id="np-more" title="More"></button>
+        </div>
+        <div class="np-progress">
+          <div class="np-bar" id="np-bar"><div class="np-fill" id="np-fill"></div></div>
+          <div class="np-times"><span id="np-cur">0:00</span><span class="np-quality" id="np-quality"></span><span id="np-rem">-0:00</span></div>
+        </div>
+        <div class="np-controls">
+          <button class="ibtn np-sm" id="np-shuffle" title="Shuffle play"></button>
+          <button class="ibtn np-skip" id="np-prev" title="Previous"></button>
+          <button class="ibtn np-play" id="np-play" title="Play"></button>
+          <button class="ibtn np-skip" id="np-next" title="Next"></button>
+          <button class="ibtn np-sm" id="np-repeat" title="Repeat"></button>
+        </div>
+        <div class="np-vol">
+          <span class="np-vol-i lo"></span>
+          <div class="np-slider" id="np-vol"><div class="np-slider-fill"></div></div>
+          <span class="np-vol-i hi"></span>
+        </div>
+        <div class="np-tools">
+          <button class="pill-btn" id="np-lyrics-toggle"></button>
+          <button class="pill-btn" id="np-queue-toggle"></button>
+          <button class="pill-btn" id="np-connect" data-connect-btn></button>
+        </div>
+      </div>
+      <div class="np-right" id="np-right">
+        <div class="lyrics" id="lyrics"></div>
+        <div class="np-queue" id="np-queue"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup" class="setup" hidden></section>
+  <div id="menu-root"></div>
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root"></div>
+
+  <script src="lang-it.js"></script>
+  <script src="i18n.js"></script>
+  <script src="icons.js"></script>
+  <script src="phonelib.js"></script>
+  <script src="app.js"></script>
+  <script src="connect.js"></script>
+  <script src="qrcode.js"></script>
+  <script src="party-guest.js"></script>
+  <script src="party.js"></script>
+</body>
+</html>

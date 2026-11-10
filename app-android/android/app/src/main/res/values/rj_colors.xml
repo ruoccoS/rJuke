@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rj_bg">#0b0e0c</color>
+    <!-- colors also used by Android Auto for highlights and the progress bar -->
+    <color name="colorPrimary">#2fbf71</color>
+    <color name="colorPrimaryDark">#0b2210</color>
+    <color name="colorAccent">#a2f7a1</color>
+</resources>

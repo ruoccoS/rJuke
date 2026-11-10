@@ -1,0 +1,68 @@
+rJuke {{VERSION}}
+================
+
+AVVIO
+1. Estrai tutta la cartella "rJuke" dove preferisci (ad esempio in Documenti).
+   Non avviarlo da dentro lo zip.
+2. Fai doppio clic su rJuke.exe.
+3. Al primo avvio Windows potrebbe mostrare "Windows ha protetto il PC":
+   clicca "Ulteriori informazioni" e poi "Esegui comunque". Succede solo la prima volta,
+   perche' l'eseguibile non e' firmato digitalmente.
+4. Consiglio: tasto destro su rJuke.exe > "Aggiungi a Start" o "Aggiungi alla barra delle applicazioni".
+
+PRIMA CONFIGURAZIONE
+Ti verra' chiesto il tuo nome e dove tieni la musica:
+- "In una cartella di questo PC": scegli la cartella (le sottocartelle vengono scansionate);
+- "Sul mio telefono": vedi PC COME ALTOPARLANTE qui sotto.
+Nome, provenienza della musica e tema si possono cambiare in qualsiasi momento da Impostazioni.
+
+PC COME ALTOPARLANTE (MUSICA DAL TELEFONO)
+Utile su un PC dove non vuoi copiare tutta la libreria (ad esempio in ufficio).
+Con PC e telefono sulla stessa rete Wi-Fi e rJuke aperto sul telefono,
+scegli il telefono dall'elenco e tocca "Consenti" sul telefono. Il PC riceve l'elenco dei brani,
+con copertine, testi e playlist: ricerca e navigazione funzionano come sempre.
+I brani vengono presi dal telefono quando li ascolti; quelli ascoltati (e i due successivi
+in coda) restano sul PC fino al limite scelto in Impostazioni (1, 2, 5 o 10 GB),
+cosi' ripartono subito anche se il telefono non risponde.
+Nota: alcune reti aziendali o "ospiti" non permettono ai dispositivi di vedersi tra loro;
+in quel caso usa l'hotspot del telefono.
+
+FORMATI
+MP3, FLAC, M4A (AAC), OGG, OPUS, WAV.
+Nota: i file M4A in formato ALAC (Apple Lossless) e i WMA non sono riproducibili.
+
+TESTI SINCRONIZZATI
+Letti dai tag del file (LRC in USLT/LYRICS/UNSYNCEDLYRICS, frame SYLT) oppure da un file .lrc
+con lo stesso nome del brano. Supportati anche i testi "parola per parola" (LRC esteso).
+
+PLAYLIST
+Importa i file .m3u8/.m3u dalla barra laterale (icona freccia accanto a "Playlist") o da Impostazioni.
+Aggiungi brani con il menu "..." o trascinandoli sulla playlist. Riordina trascinando.
+Le playlist .m3u8/.m3u che si trovano nelle sottocartelle della cartella della musica
+vengono importate da sole a ogni scansione (senza doppioni).
+
+RJUKE CONNECT (PC <-> TELEFONO)
+Con PC e telefono sulla stessa rete Wi-Fi di casa e rJuke aperto su entrambi,
+il pulsante "Dispositivi" (in alto, accanto ai Testi) mostra il telefono: puoi comandarlo,
+portare la musica sul PC ("Ascolta qui") o mandarla al telefono ("Sposta la musica").
+Al primo avvio Windows chiedera' se consentire a rJuke l'accesso alla rete:
+spunta "Reti private" e clicca "Consenti accesso", altrimenti il telefono non vedra' il PC.
+La prima volta che un dispositivo si collega, rJuke chiede il permesso.
+
+PARTYBOX
+Il pulsante con i coriandoli in alto avvia "PartyBox di <il tuo nome>": compare un QR code.
+I tuoi amici lo inquadrano con la fotocamera e, dal browser del telefono (senza installare niente),
+scelgono i brani da mettere in coda. Puoi scegliere tra coda libera o con approvazione.
+Devono essere collegati alla tua stessa rete Wi-Fi.
+Se i telefoni non riescono ad aprire la pagina, nel pannello di PartyBox compare
+"Consenti a rJuke": premilo e rispondi "Si'" alla richiesta di Windows.
+
+SCORCIATOIE
+Spazio riproduci/pausa · Ctrl+Freccia destra/sinistra brano successivo/precedente
+Freccia destra/sinistra avanti/indietro 5 s · Freccia su/giu' volume
+Ctrl+F cerca · Ctrl+L testi · Esc chiudi
+Funzionano anche i tasti multimediali della tastiera.
+
+DATI
+Impostazioni, libreria e playlist sono salvate in %APPDATA%\rJuke
+(i tuoi file musicali non vengono mai modificati).

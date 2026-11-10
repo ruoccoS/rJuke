@@ -1,0 +1,123 @@
+name: Release
+
+# One release = Android APK + Windows zip, built from the same commit.
+# Every push to main is built; when package.json has a version with no release yet,
+# the release vX.Y.Z is created with both files. Other branches only build.
+on:
+  push:
+    branches: ['**']
+    paths-ignore: ['**.md', 'docs/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app-android
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app-android/package-lock.json
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Build the web interface
+        run: |
+          npm ci
+          npm run build:web
+          npx cap sync android
+
+      - name: Signing key
+        env:
+          RJ_KEYSTORE_B64: ${{ secrets.RJ_KEYSTORE_B64 }}
+        run: |
+          if [ -z "$RJ_KEYSTORE_B64" ]; then
+            echo "::error::Missing RJ_KEYSTORE_B64 secret (Settings → Secrets and variables → Actions)"; exit 1
+          fi
+          echo "$RJ_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/rjuke.jks"
+
+      - name: Build
+        working-directory: app-android/android
+        env:
+          RJ_KEYSTORE: ${{ runner.temp }}/rjuke.jks
+          RJ_KEY_ALIAS: rjuke
+          RJ_KEYSTORE_PASSWORD: ${{ secrets.RJ_KEYSTORE_PASSWORD }}
+          RJ_KEY_PASSWORD: ${{ secrets.RJ_KEYSTORE_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Collect
+        run: |
+          V=$(node -p "require('./package.json').version")
+          mkdir -p ../out
+          cp android/app/build/outputs/apk/release/app-release.apk "../out/rJuke-$V-Android.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: out/*.apk
+          if-no-files-found: error
+
+  windows:
+    name: Windows zip
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app-windows
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app-windows/package-lock.json
+
+      - name: Build
+        run: |
+          npm ci
+          bash tools/package.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: app-windows/dist/*.zip
+          if-no-files-found: error
+
+  release:
+    name: Publish
+    needs: [android, windows]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: files
+          merge-multiple: true
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V=$(node -p "require('./app-android/package.json').version")
+          if gh release view "v$V" >/dev/null 2>&1; then echo "v$V is already released"; exit 0; fi
+          # release notes: the section of CHANGELOG.md for this version
+          awk -v v="$V" '/^## /{p = index($0, "[" v "]") > 0; next} p' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "rJuke $V" > notes.md
+          gh release create "v$V" files/* --target "$GITHUB_SHA" --title "rJuke $V" --notes-file notes.md
